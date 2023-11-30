@@ -1,0 +1,52 @@
+# Define dictionaries for mapping between English letters/numbers and Morse code
+english_to_morse_dict = {
+    'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.', 'G': '--.', 'H': '....',
+    'I': '..', 'J': '.---', 'K': '-.-', 'L': '.-..', 'M': '--', 'N': '-.', 'O': '---', 'P': '.--.',
+    'Q': '--.-', 'R': '.-.', 'S': '...', 'T': '-', 'U': '..-', 'V': '...-', 'W': '.--', 'X': '-..-',
+    'Y': '-.--', 'Z': '--..',
+    '1': '.----', '2': '..---', '3': '...--', '4': '....-', '5': '.....',
+    '6': '-....', '7': '--...', '8': '---..', '9': '----.', '0': '-----',
+    ' ': '/'
+}
+
+morse_to_english_dict = {value: key for key, value in english_to_morse_dict.items()}
+
+# Function to decrypt Morse code to an English phrase
+def decrypt_morse(morse_code):
+    morse_words = morse_code.split('   ')  # Morse code words are separated by three spaces
+    decrypt = []
+    for word in morse_words:
+        morse = word.split(' ')
+        decrypted_text = ''
+        for text in morse:
+            if text in morse_to_english_dict:
+                decrypted_text += morse_to_english_dict[text]
+        decrypt.append(decrypted_text)
+    return ' '.join(decrypt)
+
+# Function to encrypt an English phrase to Morse code
+def encrypt_text(text):
+    encrypt = []                  # Initialize an empty list to store the Morse code.
+    for letter in text.upper():       # Convert the phrase to uppercase to ensure consistency.
+        if letter in english_to_morse_dict:
+            encrypt.append(english_to_morse_dict[letter] + ' ')
+        else:
+            encrypt.append(' ')      
+    return ''.join(encrypt)        # Join the Morse code elements with spaces.
+
+if __name__ == '__main__':
+    choice = input("Choose (e for encryption, d for decryption): ")
+
+    if choice == 'e':
+        english_input = input("Enter a text to encrypt: ")
+        encrypted_text = encrypt_text(english_input)
+        print("Morse Code:", encrypted_text)
+        
+    elif choice == 'd':
+        morse_code_input = input("Enter Morse code to decrypt: ")
+        decrypted_text = decrypt_morse(morse_code_input)
+        print("Decrypted text:", decrypted_text)
+        
+     
+    else:
+        print("Invalid choice. Please choose 1 for decryption or 2 for encryption.")
